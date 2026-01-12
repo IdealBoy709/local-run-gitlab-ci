@@ -1,0 +1,24 @@
+stages:
+  - prepare
+  - test
+  - package
+
+prepare_env:
+  stage: prepare
+  script:
+    - echo "Preparing local environment"
+    - npm ci
+    - node -v
+
+unit_tests:
+  stage: test
+  script:
+    - echo "Running tests"
+    - node -e "console.log('tests passed')"
+
+build_artifacts:
+  stage: package
+  script:
+    - echo "Packaging demo artifacts"
+    - mkdir -p dist
+    - echo "demo artifact" > dist/result.txt

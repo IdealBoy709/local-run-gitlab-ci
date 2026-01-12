@@ -1,0 +1,7 @@
+# local-build/.ci-ignore
+# 一行一个正则，支持 # 注释与空行
+#
+# 常见依赖安装命令（示例）
+^npm (i|ci)(\s|$)
+^yarn( install)?(\s|$)
+^pnpm i(\s|$)

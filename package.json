@@ -1,0 +1,40 @@
+{
+  "name": "local-run-gitlab-ci",
+  "version": "0.1.0",
+  "description": "在本地按 stages 顺序执行 .gitlab-ci.yml 中的 script，并提供 local-run-ci 脚手架命令",
+  "keywords": [
+    "gitlab",
+    "ci",
+    "local",
+    "run"
+  ],
+  "author": "Chasely Xu",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/IdealBoy709/local-run-gitlab-ci.git"
+  },
+  "bin": {
+    "local-run-ci": "./bin/local-run-ci.js"
+  },
+  "files": [
+    "bin",
+    "resources",
+    "example",
+    "README.md",
+    "LICENSE"
+  ],
+  "scripts": {
+    "local-run": "node ./local-build"
+  },
+  "dependencies": {
+    "chalk": "^4.1.2",
+    "commander": "^8.3.0",
+    "fs-extra": "^10.1.0",
+    "shelljs": "^0.8.5",
+    "yaml": "^1.10.2"
+  },
+  "devDependencies": {
+    "prettier": "^2.8.8"
+  }
+}

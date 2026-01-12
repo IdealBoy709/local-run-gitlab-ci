@@ -1,0 +1,9 @@
+{
+  "name": "local-run-ci-example",
+  "version": "1.0.0",
+  "private": true,
+  "description": "示例项目，演示 local-run-ci 执行 .gitlab-ci.yml",
+  "scripts": {
+    "local:build": "node ./local-build"
+  }
+}
