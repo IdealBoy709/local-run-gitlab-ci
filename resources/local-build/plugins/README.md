@@ -42,4 +42,6 @@ module.exports = {
 - `cmd`：当前命令字符串。
 - `result`：命令执行结果 `{ code, dry }`。
 
+`beforeCmd` 支持返回字符串作为新命令（返回空值则不改动）。
+
 示例插件请参考同目录下的 `pre-env.js`、`post-summary.js`。

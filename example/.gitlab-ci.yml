@@ -13,6 +13,7 @@ prepare_env:
 unit_tests:
   stage: test
   script:
+    - npm build prod
     - echo "Running tests"
     - node -e "console.log('tests passed')"
 

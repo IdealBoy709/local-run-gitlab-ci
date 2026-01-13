@@ -11,6 +11,7 @@ process.chdir(rootDir);
 const plugins = [
   require('./plugins/pre-env'),
   require('./plugins/post-summary'),
+  require('./plugins/replace-build'),
 ];
 
 // 运行 runner（注入插件 + 固定 ignore 文件路径）

@@ -150,6 +150,7 @@ const Plugins = {
   },
 
   async call(allPlugins, hookName, ctx) {
+    let lastResult;
     for (const p of allPlugins) {
       const fn = p.hooks && p.hooks[hookName];
       if (typeof fn !== 'function') continue;
@@ -157,7 +158,8 @@ const Plugins = {
       try {
         const prevPlugin = ctx.plugin;
         ctx.plugin = p.name;
-        await fn(ctx);
+        // eslint-disable-next-line no-await-in-loop
+        lastResult = await fn(ctx);
         if (prevPlugin === undefined) delete ctx.plugin;
         else ctx.plugin = prevPlugin;
       } catch (e) {
@@ -166,6 +168,7 @@ const Plugins = {
         process.exit(1);
       }
     }
+    return lastResult;
   },
 };
 
@@ -313,16 +316,17 @@ async function run(options = {}) {
           continue;
         }
 
-        await Plugins.call(allPlugins, 'beforeCmd', { ...ctxBase, stage, jobName, job, cmd });
+        const nextCmd = await Plugins.call(allPlugins, 'beforeCmd', { ...ctxBase, stage, jobName, job, cmd });
+        const finalCmd = typeof nextCmd === 'string' && nextCmd.trim() ? nextCmd : cmd;
 
-        const r = CI.runCommand(shell, cmd, args);
+        const r = CI.runCommand(shell, finalCmd, args);
 
-        await Plugins.call(allPlugins, 'afterCmd', { ...ctxBase, stage, jobName, job, cmd, result: r });
+        await Plugins.call(allPlugins, 'afterCmd', { ...ctxBase, stage, jobName, job, cmd: finalCmd, result: r });
 
         if (r.code !== 0) {
-          await Plugins.call(allPlugins, 'onError', { ...ctxBase, stage, jobName, job, cmd, result: r });
+          await Plugins.call(allPlugins, 'onError', { ...ctxBase, stage, jobName, job, cmd: finalCmd, result: r });
           Log.err(Log.c(Log.color.red, `\n❌ 执行失败: ${stage}/${jobName}`));
-          Log.err(Log.c(Log.color.red, `命令: ${cmd}`));
+          Log.err(Log.c(Log.color.red, `命令: ${finalCmd}`));
           process.exit(r.code || 1);
         }
       }
