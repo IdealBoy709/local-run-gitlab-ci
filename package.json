@@ -1,6 +1,6 @@
 {
   "name": "local-run-gitlab-ci",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "在本地按 stages 顺序执行 .gitlab-ci.yml 中的 script，并提供 local-run-ci 脚手架命令",
   "keywords": [
     "gitlab",
@@ -21,6 +21,7 @@
     "bin",
     "resources",
     "example",
+    "src",
     "README.md",
     "LICENSE"
   ],
